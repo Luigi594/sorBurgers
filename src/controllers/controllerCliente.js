@@ -6,7 +6,7 @@ exports.ListaClientes = async (req, res) => {
     const listaClientes = await modeloCliente.findAll();
 
     if(!listaClientes.length > 0){
-        res.send("No hay datos por mostrar");
+        res.status(200).json({msj: "No hay datos por mostrar"});
     }
     else{
         res.status(200).json({Clientes: listaClientes});
@@ -29,7 +29,7 @@ exports.GuardarCliente = async (req, res) => {
     })
     .catch((err) => {
         console.log(err);
-        res.status(400).json({msj: "El registro no pudo ser guardado"});
+        res.status(406).json({msj: "El registro no pudo ser guardado"});
     })
 }
 
@@ -47,7 +47,7 @@ exports.ModificarCliente = async (req, res) => {
     })
 
     if(!buscaCliente){
-        res.status(400).json({msj: "El id proporcionado no existe"});
+        res.status(404).json({msj: "El id proporcionado no existe"});
     }
     else{
 
@@ -61,7 +61,7 @@ exports.ModificarCliente = async (req, res) => {
         })
         .catch((err) => {
             console.log(err);
-            res.status(400).json({msj: "El registro no pudo ser modificado"});
+            res.status(304).json({msj: "El registro no pudo ser modificado"});
         })
     }
 }
@@ -79,10 +79,10 @@ exports.EliminarCliente = async (req, res) => {
     .then((result) => {
 
         if(result == 0){
-            res.status(401).json({msj: "El id proporcionado no existe"});
+            res.status(400).json({msj: "El id proporcionado no existe"});
         }
         else{
-            res.status(201).json({msj: "Registro eliminado satisfactoriamente"});
+            res.status(200).json({msj: "Registro eliminado satisfactoriamente"});
         }
     })
 }
