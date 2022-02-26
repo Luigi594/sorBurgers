@@ -62,7 +62,6 @@ exports.ListaUsuariosEmpleados = async (req, res) => {
     }
 }
 
-let id = 0;
 // insertar usuario del cliente
 exports.GuardarUsuarioCliente = async (req, res) => {
 
@@ -75,7 +74,7 @@ exports.GuardarUsuarioCliente = async (req, res) => {
         limit: 1
     })
 
-    id = cliente.dataValues.id;
+    const id = cliente.dataValues.id;
     
     const { correo, contrasenia } = req.body;
 
