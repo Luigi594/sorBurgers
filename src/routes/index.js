@@ -9,5 +9,5 @@ router.get('/', (req, res) => {
 // aquí van a ir toodas las rutas, de todos los cruds
 router.use('/clientes/', require('./rutasCliente')); //ruta de clientes
 router.use('/empleados', require('./rutasEmpleado')); // ruta de empleados
-
+router.use('/usuarios/', require('./rutasUsuarios')); // ruta de usuarios
 module.exports = router;

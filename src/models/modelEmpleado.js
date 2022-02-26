@@ -4,8 +4,8 @@ const modeloEmpleado = db.define(
 
     "empleado",
     {
-        IdEmpleado: {type: sequelize.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false},
-        puestoId: {type: sequelize.INTEGER, allowNull: false},
+        id: {type: sequelize.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false},
+        //puestoId: {type: sequelize.INTEGER, allowNull: false},
         nombre: {type: sequelize.STRING(45), allowNull: false},
         apellido: {type: sequelize.STRING(45), allowNull: false},
         telefono: {type: sequelize.STRING(20), allowNull: false},
