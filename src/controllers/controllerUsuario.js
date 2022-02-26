@@ -62,10 +62,9 @@ exports.ListaUsuariosEmpleados = async (req, res) => {
     }
 }
 
-// listar el último cliente registrado
-// este me va a servir para almacenar este cliente con usuario
 let id = 0;
-exports.ObtenerClienteRegistrado = async (req, res) => {
+// insertar usuario del cliente
+exports.GuardarUsuarioCliente = async (req, res) => {
 
     /**SELECT * FROM sorburgers.clientes order by id desc limit 1; */
     const cliente = await Cliente.findOne({
@@ -77,14 +76,7 @@ exports.ObtenerClienteRegistrado = async (req, res) => {
     })
 
     id = cliente.dataValues.id;
-    console.log(id);
-
-    res.status(200).json(cliente);
-}
-
-// insertar usuario del cliente
-exports.GuardarUsuarioCliente = async (req, res) => {
-
+    
     const { correo, contrasenia } = req.body;
 
     await modeloUsuario.create({
