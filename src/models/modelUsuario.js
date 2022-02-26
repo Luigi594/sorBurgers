@@ -8,7 +8,7 @@ const modeloUsuario = db.define(
 
     "usuario",
     {
-        Idusuario: {type: sequelize.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false},
+        id: {type: sequelize.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false},
         correo: {type: sequelize.STRING(45), allowNull: false},
         contrasenia: {type: sequelize.STRING(250), allowNull: false},
         estado: {type: sequelize.ENUM('AC', 'NA'), allowNull: false, defaultValue: 'AC'},

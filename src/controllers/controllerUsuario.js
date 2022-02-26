@@ -61,3 +61,43 @@ exports.ListaUsuariosEmpleados = async (req, res) => {
         res.status(200).json({Usuarios: listaEmpleados});
     }
 }
+
+// listar el último cliente registrado
+// este me va a servir para almacenar este cliente con usuario
+let id = 0;
+exports.ObtenerClienteRegistrado = async (req, res) => {
+
+    /**SELECT * FROM sorburgers.clientes order by id desc limit 1; */
+    const cliente = await Cliente.findOne({
+        attributes: ['id'],
+        order: [
+            ['id', 'DESC']
+        ],
+        limit: 1
+    })
+
+    id = cliente.dataValues.id;
+    console.log(id);
+
+    res.status(200).json(cliente);
+}
+
+// insertar usuario del cliente
+exports.GuardarUsuarioCliente = async (req, res) => {
+
+    const { correo, contrasenia } = req.body;
+
+    await modeloUsuario.create({
+
+        clienteId: id,
+        correo: correo,
+        contrasenia: contrasenia
+    })
+    .then((result) => {
+        res.status(201).json({msj: "Registro almacenado exitosamente!"});
+    })
+    .catch((err) => {
+        console.log(err);
+        res.status(406).json({msj: "El registro no pudo ser guardado"});
+    })
+}
