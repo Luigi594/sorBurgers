@@ -1,4 +1,5 @@
 const modeloCliente = require('../models/modelCliente');
+const { check, validationResult } = require('express-validator');
 
 // listar clientes
 exports.ListaClientes = async (req, res) => {
@@ -18,19 +19,32 @@ exports.GuardarCliente = async (req, res) => {
 
     const { nombre, apellido, telefono, fechaNacimiento } = req.body;
 
-    await modeloCliente.create({
-        nombre, 
-        apellido, 
-        telefono, 
-        fechaNacimiento
+    const buscaRegistro = await modeloCliente.findOne({
+        where:{
+            telefono: telefono
+        }
     })
-    .then((result) => {
-        res.status(201).json({msj: "Registro almacenado exitosamente!"});
-    })
-    .catch((err) => {
-        console.log(err);
-        res.status(406).json({msj: "El registro no pudo ser guardado"});
-    })
+
+    if(buscaRegistro){
+        res.status(422).json({msj: "Registro duplicado!"});
+    }
+    else{
+        
+        await modeloCliente.create({
+            nombre, 
+            apellido, 
+            telefono, 
+            fechaNacimiento
+        })
+        .then((result) => {
+            res.status(201).json({msj: "Registro almacenado exitosamente!"});
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(406).json({msj: "El registro no pudo ser guardado"});
+        })
+    }
+   
 }
 
 
@@ -42,7 +56,7 @@ exports.ModificarCliente = async (req, res) => {
 
     let buscaCliente = await modeloCliente.findOne({
         where:{
-            IdCliente: id
+            id: id
         }
     })
 
@@ -73,7 +87,7 @@ exports.EliminarCliente = async (req, res) => {
 
     await modeloCliente.destroy({
         where:{
-            IdCliente: id
+            id: id
         }
     })
     .then((result) => {

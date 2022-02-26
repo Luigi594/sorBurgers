@@ -78,17 +78,79 @@ exports.GuardarUsuarioCliente = async (req, res) => {
     
     const { correo, contrasenia } = req.body;
 
-    await modeloUsuario.create({
+    const buscaCorreo = await modeloUsuario.findOne({
+        where:{
+            correo: correo
+        }
+    })
 
-        clienteId: id,
-        correo: correo,
-        contrasenia: contrasenia
+    if(buscaCorreo){
+        res.status(422).json({msj: "Correo existente!"});
+    }
+    else{
+
+        await modeloUsuario.create({
+
+            clienteId: id,
+            correo: correo,
+            contrasenia: contrasenia
+        })
+        .then((result) => {
+            res.status(201).json({msj: "Registro almacenado exitosamente!"});
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(406).json({msj: "El registro no pudo ser guardado"});
+        })
+    }
+}
+
+// modificar cuenta de usuario
+exports.ModificarCuentaCliente = async (req, res) => {
+
+    const { id } = req.query;
+    const { correo, contrasenia } = req.body;
+
+    let buscaCuenta = await modeloUsuario.findOne({
+        where:{
+            clienteId: id
+        }
+    })
+
+    if(!buscaCuenta){
+        res.status(404).json({msj: "El id proporcionado no existe"});
+    }
+    else{
+
+        buscaCuenta.correo = correo;
+        buscaCuenta.contrasenia = contrasenia;
+        await buscaCuenta.save()
+        .then((result) => {
+            res.status(201).json({msj: "La cuenta ha sido modificada exitosamente!"});
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(304).json({msj: "La cuenta no pudo ser modificada"});
+        })
+    }
+}
+
+exports.EliminarCuentaCliente = async (req, res) => {
+
+    const  { id } = req.query;
+    
+    await modeloUsuario.destroy({
+        where:{
+            id: id
+        }
     })
     .then((result) => {
-        res.status(201).json({msj: "Registro almacenado exitosamente!"});
-    })
-    .catch((err) => {
-        console.log(err);
-        res.status(406).json({msj: "El registro no pudo ser guardado"});
+
+        if(result == 0){
+            res.status(400).json({msj: "El id proporcionado no existe"});
+        }
+        else{
+            res.status(200).json({msj: "Cuenta eliminada satisfactoriamente"});
+        }
     })
 }

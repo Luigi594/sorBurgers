@@ -1,5 +1,5 @@
 const { body, check, validationResult } = require('express-validator');
-const modeloCliente = require('../models/modelCliente');
+const modeloUsuario = require('../models/modelUsuario');
 
 exports.Validacion = [
 
@@ -17,19 +17,6 @@ exports.Validacion = [
     .withMessage("Telefono no debe contener caracteres especiales")
     .isLength({min: 8})
     .withMessage("Longitud incorrecta para el telefono"),
-    check('telefono').custom(value => {
-
-        return modeloCliente.findOne({
-            where:{
-                telefono: value
-            }
-        })
-        .then((result) => {
-            if(result){
-                throw new Error("Teléfono en uso");
-            }
-        });
-    }),
 
     body('fechaNacimiento').isDate()
     .withMessage("Formato incorrecto de fecha"),
@@ -46,3 +33,26 @@ exports.Validacion = [
         }
     }
 ];
+
+// este es para crear el usuario
+exports.ValidarUsuarioCliente = [
+
+    body('correo').isEmail()
+    .withMessage("Formato incorrecto para el correo"),
+    
+    body('contrasenia').isLength({min: 6})
+    .withMessage("La contraseña debe tener al menos 6 caracteres")
+    .matches(/\d/)
+    .withMessage("La contraseña debe contener números"),
+    (req, res, next) => {
+
+        const errors = validationResult(req);
+
+        if(!errors.isEmpty()){
+            return res.status(422).json({ errors: errors.array() });
+        }
+        else{
+            next();
+        }
+    }
+]
