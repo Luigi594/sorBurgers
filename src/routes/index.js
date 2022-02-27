@@ -11,4 +11,5 @@ router.use('/clientes/', require('./rutasCliente')); //ruta de clientes
 router.use('/empleados', require('./rutasEmpleado')); // ruta de empleados
 router.use('/usuarios/', require('./rutasUsuarios')); // ruta de usuarios
 router.use('/ingredientes', require('./rutasIngrediente'));// ruta de ingrediente
+router.use('/autenticacion', require('./rutaAutenticar')); // ruta para autenticar
 module.exports = router;
