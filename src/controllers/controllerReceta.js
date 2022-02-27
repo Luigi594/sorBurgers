@@ -1,6 +1,3 @@
-
-
-
 const modeloReceta = require('../models/modelReceta');
 const { check, validationResult } = require('express-validator');
 

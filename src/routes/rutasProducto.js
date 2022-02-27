@@ -1,9 +1,9 @@
-/*const {Router} = require('express');
+const {Router} = require('express');
 const router = Router();
 const { body } = require('express-validator');
-const validaciones = require('../middleware/authMiddleware');
+const validaciones = require('../middleware/authProducto');
 
-importando el controlador
+//importando el controlador
 const controladorProducto = require('../controllers/controllerProducto');
 
 router.get('/', controladorProducto.ListaProductos);
@@ -12,4 +12,3 @@ router.put('/modificar', validaciones.Validacion, controladorProducto.ModificarP
 router.delete('/eliminar', controladorProducto.EliminarProducto);
 
 module.exports = router;
-*/
