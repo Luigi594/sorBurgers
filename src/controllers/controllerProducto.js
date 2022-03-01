@@ -1,7 +1,3 @@
-
-
-
-
 const modeloProducto = require('../models/modelProducto');
 const { check, validationResult } = require('express-validator');
 
