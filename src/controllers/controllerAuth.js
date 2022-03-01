@@ -23,31 +23,19 @@ exports.RecuperarContrasenia = async (req, res) => {
     const { correo } = req.body;
     const pin = Math.floor(Math.random() * (9999-1000) + 1000);
 
-    let buscaCorreo = await modeloUsuario.findOne({
-        where:{
-            correo: correo
-        }
-    });
+    // estos datos se mandan al archivo email
+    const data = {
+        correo: correo,
+        pin: pin
+    }
 
-    if(!buscaCorreo){
+    if(email.RecuperacionContrasenia(data)){
 
+        // aquí me vale, voy a usar este JAJA
+        respuesta("Correo enviado", 200, [], res);
     }
     else{
-
-        // estos datos se mandan al archivo email
-        const data = {
-            correo: correo,
-            pin: pin
-        }
-
-        if(email.RecuperacionContrasenia(data)){
-
-            // aquí me vale, voy a usar este JAJA
-            respuesta("Correo enviado", 200, [], res);
-        }
-        else{
-            respuesta("Problema al enviar el correo", 400, [], res);
-        }
+        respuesta("Problema al enviar el correo", 400, [], res);
     }
 }
 

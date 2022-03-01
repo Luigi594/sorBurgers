@@ -62,6 +62,20 @@ exports.ValidarCorreo = [
 
     body('correo').isEmail()
     .withMessage("Formato incorrecto para el correo"),
+
+    check('correo').custom(value => {
+
+        return modeloUsuario.findOne({
+            where:{
+                correo: value
+            }
+        })
+        .then((result) => {
+            if(!result){
+                throw new Error("El correo no existe");
+            }
+        })
+    }),
     (req, res, next) => {
 
         const errors = validationResult(req);

@@ -14,4 +14,5 @@ router.use('/ingredientes', require('./rutasIngrediente'));// ruta de ingredient
 router.use('/productos', require('./rutasProducto'));// ruta de productos
 router.use('/recetas', require('./rutasReceta'));// ruta de recetas
 router.use('/autenticacion', require('./rutaAutenticar')); // ruta para autenticar
+router.use('/archivos', require('./rutasArchivos')); // ruta para imagen 
 module.exports = router;

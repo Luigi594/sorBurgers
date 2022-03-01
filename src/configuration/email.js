@@ -21,16 +21,15 @@ exports.RecuperacionContrasenia = async (data) => {
         }
     });
 
-    transport.verify(async function (error, sucess) {
+    transport.verify(async function (error, success) {
 
         if(error){
             console.log(error);
             return false;
         }
         else{
-            return sucess;
+            await transport.sendMail(configuracion);
+            return success
         }
-
-        return await transport.sendMail(configuracion);
     })
 }
