@@ -2,6 +2,9 @@ const express = require('express');
 const morgan = require('morgan');
 const app = express();
 
+// variable de entorno
+require('dotenv').config();
+
 // aqui un único archivo de rutas, será el index.js
 const rutas = require('./routes');
 
