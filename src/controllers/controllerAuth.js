@@ -21,7 +21,7 @@ const respuesta = (msj, statusCode, id, res) => {
 exports.RecuperarContrasenia = async (req, res) => {
 
     const { correo } = req.body;
-    const pin = '1234';
+    const pin = Math.floor(Math.random() * (9999-1000) + 1000);
 
     let buscaCorreo = await modeloUsuario.findOne({
         where:{
