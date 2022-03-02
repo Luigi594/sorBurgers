@@ -6,7 +6,7 @@ const modeloUsuario = require('../models/modelUsuario');
 
 // se supone que es la duración de una 1h para el token
 const duration = 60 * 60 * 3600;
-const key = 'ContraseniaSegura';
+const key = process.env.KEY_JWT;
 
 // el jsonwebtoken utiliza el id como payload
 // es para generar el jsonwebtoken

@@ -1,7 +1,12 @@
 const {Router} = require('express');
 const router = Router();
 const controllerAuth = require('../controllers/controllerAuth');
+const validaciones = require('../middleware/authMiddleware');
 
-router.post('/iniciosesion', controllerAuth.Session);
+// estas son para el login
+router.post('/iniciosesion', validaciones.ValidarUsuario, controllerAuth.Session);
+router.get('/error', controllerAuth.Error);
 
+// estas son para el envío de correo
+router.post('/recuperarContrasenia', validaciones.ValidarCorreo, controllerAuth.RecuperarContrasenia);
 module.exports = router;

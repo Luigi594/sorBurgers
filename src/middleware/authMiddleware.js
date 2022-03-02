@@ -35,7 +35,7 @@ exports.Validacion = [
 ];
 
 // este es para crear el usuario
-exports.ValidarUsuarioCliente = [
+exports.ValidarUsuario = [
 
     body('correo').isEmail()
     .withMessage("Formato incorrecto para el correo"),
@@ -44,6 +44,38 @@ exports.ValidarUsuarioCliente = [
     .withMessage("La contraseña debe tener al menos 6 caracteres")
     .matches(/\d/)
     .withMessage("La contraseña debe contener números"),
+    (req, res, next) => {
+
+        const errors = validationResult(req);
+
+        if(!errors.isEmpty()){
+            return res.status(422).json({ errors: errors.array() });
+        }
+        else{
+            next();
+        }
+    }
+];
+
+// para validar el envío de correo
+exports.ValidarCorreo = [
+
+    body('correo').isEmail()
+    .withMessage("Formato incorrecto para el correo"),
+
+    check('correo').custom(value => {
+
+        return modeloUsuario.findOne({
+            where:{
+                correo: value
+            }
+        })
+        .then((result) => {
+            if(!result){
+                throw new Error("El correo no existe");
+            }
+        })
+    }),
     (req, res, next) => {
 
         const errors = validationResult(req);
