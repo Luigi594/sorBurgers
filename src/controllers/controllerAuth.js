@@ -31,11 +31,55 @@ exports.RecuperarContrasenia = async (req, res) => {
 
     if(email.RecuperacionContrasenia(data)){
 
-        // aquí me vale, voy a usar este JAJA
-        respuesta("Correo enviado", 200, [], res);
+        let buscaCliente = await modeloUsuario.findOne({
+            where:{
+                correo: correo
+            }
+        })
+
+        buscaCliente.pin = pin;
+        await buscaCliente.save()
+        .then((result) => {
+            respuesta("Correo enviado", 200, [], res);
+        })
+        .catch((err) => {
+            respuesta("Problema al enviar el correo", 400, [], res);
+        });    
+    }
+}
+
+exports.ComprobarPin = async (req, res) => {
+
+    const { id } = req.query;
+    const { pin, contrasenia, confirmar } = req.body;
+
+    let buscaUsuario = await modeloUsuario.findOne({
+        where:{
+            id: id
+        }
+    })
+
+    if(!buscaUsuario){
+        res.status(404).json({msj: "El id proporcionado no existe"});
     }
     else{
-        respuesta("Problema al enviar el correo", 400, [], res);
+
+        if(confirmar !== contrasenia){
+            res.status(200).json({msj: "Las contraseñas no son iguales"});
+        }
+        else{
+
+            buscaUsuario.contrasenia = contrasenia;
+            buscaUsuario.pin = (pin * 0);
+            await buscaUsuario.save()
+            .then((result) => {
+                res.status(201).json({msj: "Operación realizada satisfactoriamente"});
+            })
+            .catch((err) => {
+                console.log(err);
+                res.status(304).json({msj: "Algo salió mal"});
+            })
+        }   
     }
 }
 
