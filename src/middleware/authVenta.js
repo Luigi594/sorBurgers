@@ -3,19 +3,13 @@ const modeloVenta = require('../models/modelVenta');
 
 exports.Validacion = [
     body('fechaVenta').isDate()
-    .withMessage("La fecha debe ser una fecha valida")
-    .isEmpty()
-    .withMessage("La fecha no puede quedar vacia"),
+    .withMessage("La fecha debe ser una fecha valida"),
 
     body('impuesto').isFloat()
-    .withMessage("El impuesto solo deben de ser numeros")
-    .isEmpty()
-    .withMessage("El impuesto no puede quedar vacio"),
+    .withMessage("El impuesto solo deben de ser numeros"),
 
     body('subtotal').isFloat()
-    .withMessage("El impuesto solo deben de ser numeros")
-    .isEmpty()
-    .withMessage("El subtotal no puede quedar vacio"),
+    .withMessage("El impuesto solo deben de ser numeros"),
 
     (req, res, next) => {
 

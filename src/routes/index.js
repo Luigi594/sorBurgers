@@ -17,7 +17,7 @@ router.use('/autenticacion', require('./rutaAutenticar')); // ruta para autentic
 router.use('/proveedores',require('./rutasProveedores')); // ruta para Proveedores
 router.use('/puesto',require('./rutasPuestos')); // ruta para Puesto
 router.use('/archivos', require('./rutasArchivos')); // ruta para imagen 
-router.use('/ventas', require('./rutasVenta')); //ruta para ventas\detalle
-
+router.use('/ventas', require('./rutasVenta')); //ruta para ventas
+router.use('/ventasdetalle', require('./rutasVentaDetalle')); //ruta para detalles
 
 module.exports = router;

@@ -3,14 +3,10 @@ const modeloVentaDetalle = require('../models/modelVentaDetalle');
 
 exports.Validacion = [
     body('cantidad').isInt()
-    .withMessage("La cantidad solo debe de ser numeros enteros")
-    .isEmpty()
-    .withMessage("La cantidad no puede quedar vacia"),
+    .withMessage("La cantidad solo debe de ser numeros enteros"),
 
     body('importe').isFloat()
-    .withMessage("El importe solo deben de ser numeros")
-    .isEmpty()
-    .withMessage("El importe no puede quedar vacio"),
+    .withMessage("El importe solo deben de ser numeros"),
 
     (req, res, next) => {
 
