@@ -88,3 +88,34 @@ exports.ValidarCorreo = [
         }
     }
 ]
+
+exports.ValidarPin = [
+
+    body('pin')
+    .matches(/\d/)
+    .withMessage("El pin ingresado no es válido"),
+
+    check('pin').custom(value => {
+
+        return modeloUsuario.findOne({
+            where:{
+                pin: value
+            }
+        })
+        .then((result) => {
+            if(!result){
+                throw new Error("El pin ingresado ya no es válido")
+            }
+        })
+    }),
+    (req, res, next) => {
+
+        const errors = validationResult(req);
+        if(!errors.isEmpty()){
+            return res.status(422).json({ errors: errors.array() });
+        }
+        else{
+            next();
+        }
+    }
+]

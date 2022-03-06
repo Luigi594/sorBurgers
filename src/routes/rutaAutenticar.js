@@ -9,4 +9,5 @@ router.get('/error', controllerAuth.Error);
 
 // estas son para el envío de correo
 router.post('/recuperarContrasenia', validaciones.ValidarCorreo, controllerAuth.RecuperarContrasenia);
+router.put('/comprobarPin', validaciones.ValidarPin, controllerAuth.ComprobarPin);
 module.exports = router;
