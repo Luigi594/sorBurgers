@@ -37,22 +37,17 @@ exports.RecibirImagen = async (req, res) => {
 
         const buscaImagen = fs.existsSync(path.join(__dirname, '../public/img/' + buscaCliente.imagen));
 
-        if(!buscaImagen){
-            res.json({msj: "La imagen no existe"});
-        }
-        else{
+        try{
 
-            try{
-
+            if(buscaImagen){
                 // esto lo que hace es eliminar la imagen del servidor?
                 fs.unlinkSync(path.join(__dirname, '../public/img/' + buscaCliente.imagen));
-                console.log("La imagen se elimino")
-            }
-            catch(err){
-                console.log(err);
-                console.log("La imagen no se elimino")
-            }
+            }    
         }
+        catch(err){
+            console.log(err);
+        }
+        
 
         buscaCliente.imagen = filename;
         await buscaCliente.save()
@@ -61,7 +56,7 @@ exports.RecibirImagen = async (req, res) => {
         })
         .catch((err) => {
             console.log(err);
-            res.json({msj: "La imagen no pudo ser eliminada"});
+            respuesta("No se pudo actualizar la imagen", 200, [], res);
         });
     }
 }
