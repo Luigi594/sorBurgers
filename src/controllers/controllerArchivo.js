@@ -47,8 +47,7 @@ exports.RecibirImagen = async (req, res) => {
         catch(err){
             console.log(err);
         }
-        
-
+    
         buscaCliente.imagen = filename;
         await buscaCliente.save()
         .then((result) => {
