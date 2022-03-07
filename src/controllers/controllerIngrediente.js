@@ -1,4 +1,4 @@
-const { Result } = require('express-validator');
+const { check, validationResult } = require('express-validator');
 const modeloIngrediente = require('../models/modelIngrediente');
 
 // listar ingredientes
