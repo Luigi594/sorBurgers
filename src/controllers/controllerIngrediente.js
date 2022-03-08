@@ -3,7 +3,7 @@ const modeloIngrediente = require('../models/modelIngrediente');
 
 // listar ingredientes
 exports.ListarIngredientes = async (req, res) => {
-    const listaIngredientes = await modeloCliente.findAll();
+    const listaIngredientes = await modeloIngrediente.findAll();
 
     if(!listaIngredientes.length > 0) {
         res.status(200).json({msj: "No hay ingredientes por mostrar"});
@@ -43,7 +43,7 @@ exports.ModificarIngrediente = async (req, res) => {
 
     let buscaIngrediente = await modeloIngrediente.findOne({
         where:{
-            IdIngredientes: id
+            id : id
         }
     })
 
@@ -74,7 +74,7 @@ exports.EliminarIngrediente = async (req, res) => {
 
     await modeloIngrediente.destroy({
         where:{
-            id: id
+            id : id
         }
     })
     .then((result) =>{
