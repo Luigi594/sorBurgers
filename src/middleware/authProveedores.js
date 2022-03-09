@@ -13,8 +13,8 @@ exports.Validacion = [
     .withMessage("La longitud mínima para el nombre es de 5 caracteres"),
 
     body('direccion').isString()
-    .withMessage("Aguire es culero")
-    .isLength({min: 3})
+    .withMessage("Longitud mínima para la dirección: 8")
+    .isLength({min: 8})
     .withMessage("La longitud mínima para el nombre es de 3 caracteres"),
 
     body('telefono').isMobilePhone()
