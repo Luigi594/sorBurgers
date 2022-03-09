@@ -1,6 +1,7 @@
 const passport = require('../configuration/passport');
 const modeloUsuario = require('../models/modelUsuario');
 const email = require('../configuration/email');
+const modeloCliente = require('../models/modelCliente');
 
 // funcion para indicar el header para el token
 const respuesta = (msj, statusCode, id, res) => {
@@ -111,9 +112,19 @@ exports.Session = async (req, res) => {
             // sii existe el usuario, buscamos la propiedad de id
             // para generar el token
             const token = passport.JsonWebToken(buscaUsuario.id);
+
+            const persona = await modeloCliente.findOne({
+                attributes: ['nombre', 'apellido'],
+                where:{ 
+                    id: buscaUsuario.id
+                }
+            });
+
+            const usuario = persona.dataValues.nombre + ' ' + persona.dataValues.apellido;
+
             const data = {
                 token: token,
-                data: buscaUsuario.correo
+                data: usuario
             };
 
             respuesta(`Bienvenido ${data.data}`, 200, data.token, res);
