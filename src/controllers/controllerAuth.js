@@ -71,7 +71,7 @@ exports.ComprobarPin = async (req, res) => {
         else{
 
             buscaUsuario.contrasenia = contrasenia;
-            buscaUsuario.pin = (pin * 0);
+            buscaUsuario.pin = null;
             await buscaUsuario.save()
             .then((result) => {
                 res.status(201).json({msj: "Operación realizada satisfactoriamente"});
@@ -91,6 +91,10 @@ exports.Session = async (req, res) => {
 
     const { correo, contrasenia } = req.body;
     const buscaUsuario = await modeloUsuario.findOne({
+        include: {
+            model: modeloCliente,
+            attributes: ['nombre', 'apellido', 'telefono', 'fechaNacimiento']
+        },
         where:{
             correo: correo
         }
@@ -124,10 +128,11 @@ exports.Session = async (req, res) => {
 
             const data = {
                 token: token,
-                data: usuario
+                usuario: usuario,
+                info: buscaUsuario
             };
 
-            respuesta(`Bienvenido ${data.data}`, 200, data.token, res);
+            respuesta(`Bienvenido ${data.usuario}`, 200, data, res);
         }
     }
 }
