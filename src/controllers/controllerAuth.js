@@ -91,10 +91,10 @@ exports.Session = async (req, res) => {
 
     const { correo, contrasenia } = req.body;
     const buscaUsuario = await modeloUsuario.findOne({
-        include: {
+        include: [{
             model: modeloCliente,
-            attributes: ['nombre', 'apellido', 'telefono', 'fechaNacimiento']
-        },
+            attributes: ['nombre', 'apellido', 'telefono', 'fechaNacimiento'],
+        }],
         where:{
             correo: correo
         }
