@@ -61,12 +61,12 @@ exports.ComprobarPin = async (req, res) => {
     })
 
     if(!buscaUsuario){
-        res.status(404).json({msj: "El id proporcionado no existe"});
+        respuesta("El usuario no existe", 404, [], res);
     }
     else{
 
         if(confirmar !== contrasenia){
-            res.status(200).json({msj: "Las contraseñas no son iguales"});
+            respuesta("Las contraseñas no son iguales", 200, [], res);
         }
         else{
 
@@ -74,11 +74,11 @@ exports.ComprobarPin = async (req, res) => {
             buscaUsuario.pin = null;
             await buscaUsuario.save()
             .then((result) => {
-                res.status(201).json({msj: "Operación realizada satisfactoriamente"});
+                respuesta("Operacion realizada correctamente", 201, [], res);
             })
             .catch((err) => {
                 console.log(err);
-                res.status(304).json({msj: "Algo salió mal"});
+                respuesta("Algo salio mal", 304, [], res);
             })
         }   
     }
@@ -109,7 +109,7 @@ exports.Session = async (req, res) => {
         // primero va lo que el usuario le manda, y después el campo definido en el modelo
         if(!buscaUsuario.verificarContrasenia(contrasenia, buscaUsuario.contrasenia)){
             
-            respuesta("Crendenciales incorrectas", 400, [], res);
+            respuesta("Credenciales incorrectas", 400, [], res);
         }
         else{
 

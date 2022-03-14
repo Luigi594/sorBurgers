@@ -104,7 +104,7 @@ exports.ValidarPin = [
         })
         .then((result) => {
             if(!result){
-                throw new Error("El pin ingresado ya no es válido")
+                throw new Error("El pin ingresado no es el proporcionado o ya no es válido")
             }
         })
     }),
