@@ -40,7 +40,7 @@ exports.RecibirImagen = async (req, res) => {
         try{
 
             if(buscaImagen){
-                // esto lo que hace es eliminar la imagen del servidor?
+                
                 fs.unlinkSync(path.join(__dirname, '../public/img/' + buscaCliente.imagen));
             }    
         }

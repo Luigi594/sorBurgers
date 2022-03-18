@@ -3,13 +3,13 @@ const modeloUsuario = require('../models/modelUsuario');
 
 exports.Validacion = [
 
-    body('nombre').isString()
-    .withMessage("Nombre no debe contener números o caracteres especiales")
+    body('nombre').matches(/^[a-zA-Z\s]+$/)
+    .withMessage("No se aceptan números o caracteres especiales")
     .isLength({min: 3})
     .withMessage("La longitud mínima para el nombre es de 3 caracteres"),
 
-    body('apellido').isString()
-    .withMessage("Apellido no debe contener números o caracteres especiales")
+    body('apellido').matches(/^[a-zA-Z\s]+$/)
+    .withMessage("No se aceptan números o caracteres especiales")
     .isLength({min: 3})
     .withMessage("La longitud mínima para el apellido es de 3 caracteres"),
 

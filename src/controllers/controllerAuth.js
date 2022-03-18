@@ -120,7 +120,7 @@ exports.Session = async (req, res) => {
             const persona = await modeloCliente.findOne({
                 attributes: ['nombre', 'apellido'],
                 where:{ 
-                    id: buscaUsuario.id
+                    id: buscaUsuario.clienteId
                 }
             });
 
