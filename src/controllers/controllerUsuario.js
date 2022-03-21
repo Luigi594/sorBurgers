@@ -35,6 +35,26 @@ exports.ListaUsuariosClientes = async (req, res) => {
     }
 }
 
+// obtener un dato en específico
+exports.ObtenerUsuario = async (req, res) => {
+
+    const { id } = req.query;
+    
+    const lista = await modeloUsuario.findOne({
+        attributes: ['correo', 'contrasenia'],
+        where:{
+            id: id
+        }
+    })
+
+    if(!lista){
+        res.status(200).json({msj: "No existe el cliente"})
+    }
+    else{
+        res.status(200).json({Usuario: lista})
+    }
+}
+
 // este solo lista los empleados
 exports.ListaUsuariosEmpleados = async (req, res) => {
 
@@ -109,7 +129,7 @@ exports.GuardarUsuarioCliente = async (req, res) => {
 exports.ModificarCuentaCliente = async (req, res) => {
 
     const { id } = req.query;
-    const { correo, contrasenia } = req.body;
+    const { correo, contrasenia, confirmar } = req.body;
 
     let buscaCuenta = await modeloUsuario.findOne({
         where:{
@@ -122,16 +142,22 @@ exports.ModificarCuentaCliente = async (req, res) => {
     }
     else{
 
-        buscaCuenta.correo = correo;
-        buscaCuenta.contrasenia = contrasenia;
-        await buscaCuenta.save()
-        .then((result) => {
-            res.status(201).json({msj: "La cuenta ha sido modificada exitosamente!"});
-        })
-        .catch((err) => {
-            console.log(err);
-            res.status(304).json({msj: "La cuenta no pudo ser modificada"});
-        })
+        if(contrasenia !== confirmar){
+            res.status(201).json({msj: "Las contraseñas no son iguales"});
+        }
+        else{
+            
+            buscaCuenta.correo = correo;
+            buscaCuenta.contrasenia = contrasenia;
+            await buscaCuenta.save()
+            .then((result) => {
+                res.status(201).json({msj: "La cuenta ha sido modificada exitosamente!"});
+            })
+            .catch((err) => {
+                console.log(err);
+                res.status(304).json({msj: "La cuenta no pudo ser modificada"});
+            })
+        }
     }
 }
 

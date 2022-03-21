@@ -7,6 +7,7 @@ const controladorUsuario = require('../controllers/controllerUsuario');
 const controladorAutenticacion = require('../controllers/controllerAuth');
 
 router.get('/', controladorAutenticacion.Autenticado, controladorUsuario.ListaUsuariosClientes);
+router.get('/editar', controladorUsuario.ObtenerUsuario);
 router.get('/empleados', controladorUsuario.ListaUsuariosEmpleados);
 
 // este es para guardar el usuario del cliente

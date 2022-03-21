@@ -14,6 +14,25 @@ exports.ListaClientes = async (req, res) => {
     }
 }
 
+// obtener un dato en específico
+exports.ObtenerCliente = async (req, res) => {
+
+    const { id } = req.query;
+    
+    const lista = await modeloCliente.findOne({
+        where:{
+            id: id
+        }
+    })
+
+    if(!lista){
+        res.status(200).json({msj: "No existe el cliente"})
+    }
+    else{
+        res.status(200).json({Cliente: lista})
+    }
+}
+
 // guardar datos del cliente
 exports.GuardarCliente = async (req, res) => {
 
@@ -46,7 +65,6 @@ exports.GuardarCliente = async (req, res) => {
     }
    
 }
-
 
 // modificar datos del cliente
 exports.ModificarCliente = async (req, res) => {
