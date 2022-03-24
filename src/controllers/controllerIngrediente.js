@@ -13,6 +13,24 @@ exports.ListarIngredientes = async (req, res) => {
     }
 }
 
+// obtener un dato
+exports.ObtenerIngrediente = async (req, res) => {
+
+    const { id } = req.query;
+
+    const lista = await modeloIngrediente.findOne({
+        where: {id: id
+        }
+    })
+
+    if(!lista){
+        res.status(200).json({msj: "No existe el ingrediente"})
+    }
+    else {
+        res.status(200).json(lista)
+    }
+}
+
 // guardar datos de ingrediente
 exports.GuardarIngrediente = async (req, res) => {
 
