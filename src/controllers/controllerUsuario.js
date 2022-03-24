@@ -1,6 +1,7 @@
 const modeloUsuario = require('../models/modelUsuario');
 const Cliente = require('../models/modelCliente');
 const Empleado = require('../models/modelEmpleado');
+const modeloCliente = require('../models/modelCliente');
 
 // esto solo lo podrá hacer el empleado con puesto Gerente
 // este lista solo los clientes
@@ -164,8 +165,18 @@ exports.ModificarCuentaCliente = async (req, res) => {
 exports.EliminarCuentaCliente = async (req, res) => {
 
     const  { id } = req.query;
-    
-    await modeloUsuario.destroy({
+
+     await modeloUsuario.destroy({
+        include:[{
+            model: modeloCliente,
+            where: {id: id}
+        }],
+        where: {
+            clienteId: id
+        }
+    })
+
+    await modeloCliente.destroy({
         where:{
             id: id
         }

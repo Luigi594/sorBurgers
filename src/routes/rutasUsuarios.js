@@ -13,5 +13,6 @@ router.get('/empleados', controladorUsuario.ListaUsuariosEmpleados);
 // este es para guardar el usuario del cliente
 router.post('/guardar/cliente', validaciones.ValidarUsuario, controladorUsuario.GuardarUsuarioCliente);
 router.put('/modificar/cliente', validaciones.ValidarUsuario, controladorUsuario.ModificarCuentaCliente);
+router.delete('/eliminar', controladorUsuario.EliminarCuentaCliente);
 
 module.exports = router;
