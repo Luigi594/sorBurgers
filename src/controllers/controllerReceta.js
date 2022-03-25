@@ -10,7 +10,26 @@ exports.ListaRecetas = async (req, res) => {
         res.status(200).json({msj: "No hay datos por mostrar"});
     }
     else{
-        res.status(200).json({Recetas: ListaRecetas});
+        res.status(200).json(ListaRecetas);
+    }
+}
+
+//obtener un dato 
+exports.ObtenerReceta = async (req, res) => {
+
+    const { id } = req.query;
+    
+    const lista = await modeloReceta.findOne({
+        where:{
+            id: id
+        }
+    })
+
+    if(!lista){
+        res.status(200).json({msj: "No existe el Receta"})
+    }
+    else{
+        res.status(200).json(lista)
     }
 }
 
