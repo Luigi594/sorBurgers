@@ -10,5 +10,6 @@ router.get('/', controladorIngrediente.ListarIngredientes);
 router.post('/guardar', validaciones.Validacion, controladorIngrediente.GuardarIngrediente);
 router.put('/modificar', validaciones.Validacion, controladorIngrediente.ModificarIngrediente);
 router.delete('/eliminar', controladorIngrediente.EliminarIngrediente);
+router.get('/editar', controladorIngrediente.ObtenerIngrediente);
 
 module.exports = router;
