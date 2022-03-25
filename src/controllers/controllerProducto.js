@@ -10,9 +10,28 @@ exports.ListaProductos = async (req, res) => {
         res.status(200).json({msj: "No hay datos por mostrar"});
     }
     else{
-        res.status(200).json({Productos: ListaProductos});
+        res.status(200).json(ListaProductos);
     }
 }
+
+//Obetener un datos por mostrar
+exports.ObtenerProductos = async (req, res) => {
+
+    const { id } = req.query;
+
+    const lista = await modeloProducto.findOne({
+        where: {id: id
+        }
+    })
+
+    if(!lista){
+        res.status(200).json({msj: "No existe el Productos"})
+    }
+    else {
+        res.status(200).json(lista)
+    }
+}
+
 
 // guardar datos del cliente
 exports.GuardarProducto = async (req, res) => {

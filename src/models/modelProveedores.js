@@ -9,7 +9,7 @@ const modeloProveedores = db.define(
         empresa: {type: sequelize.STRING(45), allowNull: false},
         direccion: {type: sequelize.STRING(45), allowNull: false},
         telefono: {type: sequelize.STRING(45), allowNull: false},
-        correo: {type: sequelize.STRING(20), allowNull: true},
+        correo: {type: sequelize.STRING(45), allowNull: true},
     },
     {
         tableName: "proveedores",

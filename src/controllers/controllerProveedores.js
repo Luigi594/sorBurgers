@@ -10,9 +10,30 @@ exports.ListaProveedores = async (req, res) => {
         res.status(200).json({msj: "No hay datos por mostrar"});
     }
     else{
-        res.status(200).json({Proveedores: ListaProveedores});
+        res.status(200).json(ListaProveedores);
     }
 }
+
+//Obtener un datos por mostrar
+exports.ObtenerProveedores = async (req, res) => {
+
+    const { id } = req.query;
+
+    const lista = await modeloProveedores.findOne({
+        where: {
+            id: id
+        }
+    })
+
+    if(!lista){
+        res.status(200).json({msj: "No existe el Proveedor"})
+    }
+    else {
+        res.status(200).json(lista)
+    }
+}
+
+
 
 // guardar datos del Proveedores
 exports.GuardaProveedores= async (req, res) => {
