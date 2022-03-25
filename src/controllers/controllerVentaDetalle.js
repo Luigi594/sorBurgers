@@ -11,7 +11,7 @@ exports.ListarDetalles = async (req, res) => {
         res.status(200).json({msj: "No hay datos por mostrar"});
     }
     else{
-        res.status(200).json({VentasDetalle: ListaVentaDetalle});
+        res.status(200).json(ListaVentaDetalle);
     }
 }
 
