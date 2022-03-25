@@ -7,6 +7,7 @@ const validaciones = require('../middleware/authProducto');
 const controladorProducto = require('../controllers/controllerProducto');
 
 router.get('/', controladorProducto.ListaProductos);
+router.get('/editar', controladorProducto.ObtenerProducto);
 router.post('/guardar', validaciones.Validacion, controladorProducto.GuardarProducto);
 router.put('/modificar', validaciones.Validacion, controladorProducto.ModificarProducto);
 router.delete('/eliminar', controladorProducto.EliminarProducto);
