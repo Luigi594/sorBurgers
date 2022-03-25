@@ -10,5 +10,5 @@ router.get('/', controladorProveedores.ListaProveedores);
 router.post('/guardar', validaciones.Validacion, controladorProveedores.GuardaProveedores);
 router.put('/modificar', validaciones.Validacion, controladorProveedores.ModificarProveedores);
 router.delete('/eliminar', controladorProveedores.EliminarProveedores);
-
+router.get('/editar',controladorProveedores.ObtenerProveedores);
 module.exports = router;

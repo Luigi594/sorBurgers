@@ -15,7 +15,7 @@ router.use('/productos', require('./rutasProducto'));// ruta de productos
 router.use('/recetas', require('./rutasReceta'));// ruta de recetas
 router.use('/autenticacion', require('./rutaAutenticar')); // ruta para autenticar
 router.use('/proveedores',require('./rutasProveedores')); // ruta para Proveedores
-router.use('/puesto',require('./rutasPuestos')); // ruta para Puesto
+router.use('/puestos',require('./rutasPuestos')); // ruta para Puesto
 router.use('/archivos', require('./rutasArchivos')); // ruta para imagen 
 router.use('/ventas', require('./rutasVenta')); //ruta para ventas
 router.use('/ventasdetalle', require('./rutasVentaDetalle')); //ruta para detalles

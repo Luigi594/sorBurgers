@@ -10,10 +10,28 @@ exports.ListaPuestos = async (req, res) => {
         res.status(200).json({msj: "No hay datos por mostrar"});
     }
     else{
-        res.status(200).json({Puestos: ListaPuestos});
+        res.status(200).json(ListaPuestos);
     }
 }
 
+//Obtener un datos por mostrar
+exports.ObtenerPuestos = async (req, res) => {
+
+    const { id } = req.query;
+
+    const lista = await modeloPuestos.findOne({
+        where: {
+            id: id
+        }
+    })
+
+    if(!lista){
+        res.status(200).json({msj: "No existe el Puesto"})
+    }
+    else {
+        res.status(200).json(lista)
+    }
+}
 // guardar datos del Puestos
 exports.GuardaPuestos = async (req, res) => {
 
