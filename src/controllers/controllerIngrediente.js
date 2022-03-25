@@ -3,13 +3,13 @@ const modeloIngrediente = require('../models/modelIngrediente');
 
 // listar ingredientes
 exports.ListarIngredientes = async (req, res) => {
-    const listaIngredientes = await modeloIngrediente.findAll();
+    const ListaIngredientes = await modeloIngrediente.findAll();
 
-    if(!listaIngredientes.length > 0) {
+    if(!ListaIngredientes.length > 0) {
         res.status(200).json({msj: "No hay ingredientes por mostrar"});
     }
     else {
-        res.status(200).json(listaIngredientes);
+        res.status(200).json(ListaIngredientes);
     }
 }
 
@@ -34,17 +34,17 @@ exports.ObtenerIngrediente = async (req, res) => {
 // guardar datos de ingrediente
 exports.GuardarIngrediente = async (req, res) => {
 
-    const { proveedorId, nombre, descripcion, cantidad, precioCompra} = req.body;
+    const { proveedoreId, nombre, descripcion, precioCompra, cantidad } = req.body;
     await modeloIngrediente.create({   
-        proveedorId,
+        proveedoreId,
         nombre,
         descripcion,
-        cantidad,
-        precioCompra
+        precioCompra,
+        cantidad
     })
 
     .then((result) => {
-        console.log(result);
+       // console.log(result);
         res.status(201).json({msj: "Registro almacenado exitosamente!"});
     })
     .catch((err) => {
@@ -57,7 +57,7 @@ exports.GuardarIngrediente = async (req, res) => {
 exports.ModificarIngrediente = async (req, res) => {
 
     const {id} = req.query;
-    const { proveedorId, nombre, descripcion, cantidad, precioCompra} = req.body;
+    const { proveedoreId, nombre, descripcion, precioCompra, cantidad} = req.body;
 
     let buscaIngrediente = await modeloIngrediente.findOne({
         where:{
@@ -69,14 +69,14 @@ exports.ModificarIngrediente = async (req, res) => {
         res.status(404).json({msj: "El id proporcionado no existe"});
     }
     else{
-        buscaIngrediente.proveedorId = proveedorId;
+        buscaIngrediente.proveedoreId = proveedoreId;
         buscaIngrediente.nombre = nombre;
         buscaIngrediente.descripcion = descripcion;
-        buscaIngrediente.cantidad = cantidad;
         buscaIngrediente.precioCompra = precioCompra;
+        buscaIngrediente.cantidad = cantidad;
         await buscaIngrediente.save()
         .then((result) =>{
-            console.log(result);
+            //console.log(result);
             res.status(201).json({msj: "Registro modificado exitosamente!"});
         })
         .catch((err) => {
