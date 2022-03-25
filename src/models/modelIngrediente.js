@@ -8,8 +8,8 @@ const modeloIngrediente = db.define(
         id: {type: sequelize.INTEGER, primaryKey: true, autoIncrement: true, allowNullValues: true},
         nombre: {type: sequelize.STRING(45), allowNull: false},
         descripcion: {type: sequelize.STRING(45), allowNull: true},
-        cantidad: {type: sequelize.INTEGER, allowNull: true},
-        precioCompra: {type: sequelize.DOUBLE, allowNull: false}
+        precioCompra: {type: sequelize.DOUBLE, allowNull: false},
+        cantidad: {type: sequelize.INTEGER, allowNull: true}
     },
 
     {
