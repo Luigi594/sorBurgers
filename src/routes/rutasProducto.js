@@ -11,5 +11,4 @@ router.get('/editar', controladorProducto.ObtenerProducto);
 router.post('/guardar', validaciones.Validacion, controladorProducto.GuardarProducto);
 router.put('/modificar', validaciones.Validacion, controladorProducto.ModificarProducto);
 router.delete('/eliminar', controladorProducto.EliminarProducto);
-router.get('/editar',controladorProducto.ObtenerProductos);
 module.exports = router;
