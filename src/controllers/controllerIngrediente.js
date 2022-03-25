@@ -9,7 +9,7 @@ exports.ListarIngredientes = async (req, res) => {
         res.status(200).json({msj: "No hay ingredientes por mostrar"});
     }
     else {
-        res.status(200).json({Ingredientes: listaIngredientes});
+        res.status(200).json(listaIngredientes);
     }
 }
 
