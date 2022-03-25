@@ -10,5 +10,5 @@ router.get('/', controladorPuestos.ListaPuestos);
 router.post('/guardar', validaciones.Validacion, controladorPuestos.GuardaPuestos);
 router.put('/modificar', validaciones.Validacion, controladorPuestos.ModificarPuestos);
 router.delete('/eliminar', controladorPuestos.EliminarPuestos);
-
+router.get('/editar',controladorPuestos.ObtenerPuestos);
 module.exports = router;
