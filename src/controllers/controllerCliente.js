@@ -10,7 +10,7 @@ exports.ListaClientes = async (req, res) => {
         res.status(200).json({msj: "No hay datos por mostrar"});
     }
     else{
-        res.status(200).json({Clientes: listaClientes});
+        res.status(200).json(listaClientes);
     }
 }
 
@@ -96,25 +96,4 @@ exports.ModificarCliente = async (req, res) => {
             res.status(304).json({msj: "El registro no pudo ser modificado"});
         })
     }
-}
-
-// eliminar el cliente
-exports.EliminarCliente = async (req, res) => {
-
-    const { id } = req.query;
-
-    await modeloCliente.destroy({
-        where:{
-            id: id
-        }
-    })
-    .then((result) => {
-
-        if(result == 0){
-            res.status(400).json({msj: "El id proporcionado no existe"});
-        }
-        else{
-            res.status(200).json({msj: "Registro eliminado satisfactoriamente"});
-        }
-    })
 }

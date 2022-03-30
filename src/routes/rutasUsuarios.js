@@ -15,4 +15,9 @@ router.post('/guardar/cliente', validaciones.ValidarUsuario, controladorUsuario.
 router.put('/modificar/cliente', validaciones.ValidarUsuario, controladorUsuario.ModificarCuentaCliente);
 router.delete('/eliminar', controladorUsuario.EliminarCuentaCliente);
 
+// este es para el empleado
+router.post('/guardar/empleado', validaciones.ValidarUsuario, controladorUsuario.GuardarUsuarioEmpleado);
+router.put('/modificar/empleado', validaciones.ValidarUsuario, controladorUsuario.ModificarCuentaEmpleado);
+router.delete('/eliminar/empleado', controladorUsuario.EliminarCuentaEmpleado);
+
 module.exports = router;

@@ -4,9 +4,6 @@ const modeloPuestos = require('../models/modelPuestos');
 exports.ListaEmpleados = async (req, res) => {
 
     const listaEmpleados = await modeloEmpleado.findAll({
-        attributes: [
-            'nombre', 'apellido'
-        ],
         include:{
             model: modeloPuestos,
             attributes: ['descripcion']
@@ -18,7 +15,7 @@ exports.ListaEmpleados = async (req, res) => {
         res.status(200).json({msj: "No hay datos por mostrar"});
     }
     else{
-        res.status(200).json({Empleados: listaEmpleados});
+        res.status(200).json(listaEmpleados);
     }
 }
 
@@ -87,25 +84,4 @@ exports.ModificarEmpleado = async (req, res) => {
             res.status(304).json({msj: "El registro no pudo ser modificado"});
         })
     }
-}
-
-// eliminar el empleado
-exports.EliminarEmpleado = async (req, res) => {
-
-    const { id } = req.query;
-    
-    await modeloEmpleado.destroy({
-        where:{
-            id: id
-        }
-    })
-    .then((result) => {
-
-        if(result == 0){
-            res.status(400).json({msj: "El id proporcionado no existe"});
-        }
-        else{
-            res.status(200).json({msj: "Registro eliminado satisfactoriamente"});
-        }
-    })
 }

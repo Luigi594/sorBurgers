@@ -2,6 +2,7 @@ const modeloUsuario = require('../models/modelUsuario');
 const Cliente = require('../models/modelCliente');
 const Empleado = require('../models/modelEmpleado');
 const modeloCliente = require('../models/modelCliente');
+const modeloEmpleado = require('../models/modelEmpleado');
 
 // esto solo lo podrá hacer el empleado con puesto Gerente
 // este lista solo los clientes
@@ -21,10 +22,7 @@ exports.ListaUsuariosClientes = async (req, res) => {
             'tipoUsuario': 'CL'
         },
         include: {
-            model: Cliente,
-            attributes: [
-                'nombre', 'apellido'
-            ]
+            model: Cliente
         }
     });
 
@@ -32,7 +30,7 @@ exports.ListaUsuariosClientes = async (req, res) => {
         res.status(200).json({msj: "No hay datos por mostrar"});
     }
     else{
-        res.status(200).json({Usuarios: listaUsuarios});
+        res.status(200).json(listaUsuarios);
     }
 }
 
@@ -61,17 +59,11 @@ exports.ListaUsuariosEmpleados = async (req, res) => {
 
     // donde el tipo de Usuario sea empleado
     const listaEmpleados = await modeloUsuario.findAll({
-        attributes: [
-            'correo', 'tipoUsuario'
-        ],
         where: {
             'tipoUsuario': 'EM'
         },
         include: {
-            model: Empleado,
-            attributes: [
-                'nombre', 'apellido'
-            ]
+            model: Empleado
         }
     });
 
@@ -79,7 +71,7 @@ exports.ListaUsuariosEmpleados = async (req, res) => {
         res.status(200).json({msj: "No hay datos por mostrar"});
     }
     else{
-        res.status(200).json({Usuarios: listaEmpleados});
+        res.status(200).json(listaEmpleados);
     }
 }
 
@@ -177,6 +169,115 @@ exports.EliminarCuentaCliente = async (req, res) => {
     })
 
     await modeloCliente.destroy({
+        where:{
+            id: id
+        }
+    })
+    .then((result) => {
+
+        if(result == 0){
+            res.status(400).json({msj: "El id proporcionado no existe"});
+        }
+        else{
+            res.status(200).json({msj: "Cuenta eliminada satisfactoriamente"});
+        }
+    })
+}
+
+/**************************Empleados**************************/
+
+exports.GuardarUsuarioEmpleado = async (req, res) => {
+
+    const empleado = await modeloEmpleado.findOne({
+        attributes: ['id'],
+        order: [
+            ['id', 'DESC']
+        ],
+        limit: 1
+    })
+
+    const id = empleado.dataValues.id;
+
+    const { correo, contrasenia } = req.body;
+
+    const buscaCorreo = await modeloUsuario.findOne({
+        where:{
+            correo: correo
+        }
+    })
+
+    if(buscaCorreo){
+        res.status(422).json({msj: "Correo existente!"});
+    }
+    else{
+
+        await modeloUsuario.create({
+
+            empleadoId: id,
+            correo: correo,
+            contrasenia: contrasenia,
+            tipoUsuario: 'EM'
+        })
+        .then((result) => {
+            res.status(201).json({msj: "Registro almacenado exitosamente!"});
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(406).json({msj: "El registro no pudo ser guardado"});
+        })
+    }
+}
+
+exports.ModificarCuentaEmpleado = async (req, res) => {
+
+    const { id } = req.query;
+    const { correo, contrasenia, confirmar } = req.body;
+
+    let buscaCuenta = await modeloUsuario.findOne({
+        where:{
+            empleadoId: id
+        }
+    })
+
+    if(!buscaCuenta){
+        res.status(404).json({msj: "El id proporcionado no existe"});
+    }
+    else{
+
+        if(contrasenia !== confirmar){
+            res.status(201).json({msj: "Las contraseñas no son iguales"});
+        }
+        else{
+            
+            buscaCuenta.correo = correo;
+            buscaCuenta.contrasenia = contrasenia;
+            await buscaCuenta.save()
+            .then((result) => {
+                res.status(201).json({msj: "La cuenta ha sido modificada exitosamente!"});
+            })
+            .catch((err) => {
+                console.log(err);
+                res.status(304).json({msj: "La cuenta no pudo ser modificada"});
+            })
+        }
+    }
+}
+
+exports.EliminarCuentaEmpleado = async (req, res) => {
+
+    const { id } = req.query;
+
+    await modeloUsuario.destroy({
+        include:[{
+            model: modeloEmpleado,
+            where: {id: id}
+        }],
+        where:{
+            empleadoId: id
+        }
+    })
+
+    await modeloEmpleado.destroy({
         where:{
             id: id
         }
