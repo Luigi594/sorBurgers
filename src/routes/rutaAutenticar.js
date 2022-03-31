@@ -5,6 +5,7 @@ const validaciones = require('../middleware/authMiddleware');
 
 // estas son para el login
 router.post('/iniciosesion', controllerAuth.Session);
+router.post('/sesion-empleado', controllerAuth.SessionEmpleado);
 router.get('/error', controllerAuth.Error);
 
 // estas son para el envío de correo

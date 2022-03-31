@@ -2,6 +2,7 @@ const passport = require('../configuration/passport');
 const modeloUsuario = require('../models/modelUsuario');
 const email = require('../configuration/email');
 const modeloCliente = require('../models/modelCliente');
+const modeloEmpleado = require('../models/modelEmpleado');
 
 // funcion para indicar el header para el token
 const respuesta = (msj, statusCode, id, res) => {
@@ -32,14 +33,14 @@ exports.RecuperarContrasenia = async (req, res) => {
 
     if(email.RecuperacionContrasenia(data)){
 
-        let buscaCliente = await modeloUsuario.findOne({
+        let buscaUsuario = await modeloUsuario.findOne({
             where:{
                 correo: correo
             }
         })
 
-        buscaCliente.pin = pin;
-        await buscaCliente.save()
+        buscaUsuario.pin = pin;
+        await buscaUsuario.save()
         .then((result) => {
             respuesta("Correo enviado", 200, [], res);
         })
@@ -120,6 +121,55 @@ exports.Session = async (req, res) => {
                 attributes: ['nombre', 'apellido'],
                 where:{ 
                     id: buscaUsuario.clienteId
+                }
+            });
+
+            const usuario = persona.dataValues.nombre + ' ' + persona.dataValues.apellido;
+
+            const data = {
+                token: token,
+                usuario: usuario,
+                info: buscaUsuario
+            };
+
+            respuesta(`Bienvenido ${data.usuario}`, 200, data, res);
+        }
+    }
+}
+
+exports.SessionEmpleado = async (req, res) => {
+
+    const { correo, contrasenia } = req.body;
+    const buscaUsuario = await modeloUsuario.findOne({
+        include: [{
+            model: modeloEmpleado
+        }],
+        where:{
+            correo: correo
+        }
+    })
+
+    if(!buscaUsuario){
+        respuesta("Usuario no registrado", 400, [], res);
+    }
+    else{
+
+        // usamos la verificacion de contrasenia de bcrypt definida en el modelo
+        // primero va lo que el usuario le manda, y después el campo definido en el modelo
+        if(!buscaUsuario.verificarContrasenia(contrasenia, buscaUsuario.contrasenia)){
+            
+            respuesta("Credenciales incorrectas", 400, [], res);
+        }
+        else{
+
+            // sii existe el usuario, buscamos la propiedad de id
+            // para generar el token
+            const token = passport.JsonWebToken(buscaUsuario.id);
+
+            const persona = await modeloEmpleado.findOne({
+                attributes: ['nombre', 'apellido'],
+                where:{ 
+                    id: buscaUsuario.empleadoId
                 }
             });
 
