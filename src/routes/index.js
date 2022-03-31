@@ -19,5 +19,6 @@ router.use('/puestos',require('./rutasPuestos')); // ruta para Puesto
 router.use('/archivos', require('./rutasArchivos')); // ruta para imagen 
 router.use('/ventas', require('./rutasVenta')); //ruta para ventas
 router.use('/ventasdetalle', require('./rutasVentaDetalle')); //ruta para detalles
+router.use('/carrito', require('./rutasCarrito')); //ruta para carrito
 
 module.exports = router;
