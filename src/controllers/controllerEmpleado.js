@@ -19,11 +19,28 @@ exports.ListaEmpleados = async (req, res) => {
     }
 }
 
+// obtener un dato
+exports.ObtenerEmpleados = async (req, res) => {
+
+    const { id } = req.query;
+
+    const lista = await modeloEmpleado.findOne({
+        where: {id: id
+        }
+    })
+
+    if(!lista){
+        res.status(200).json({msj: "No existe el empleado"})
+    }
+    else {
+        res.status(200).json(lista)
+    }
+}
+
 // guardar datos del empleado
 exports.GuardarEmpleado = async (req, res) => {
 
     const { puestoId, nombre, apellido, telefono, fechaNacimiento } = req.body;
-
     const buscaRegistro = await modeloEmpleado.findOne({
         where:{
             telefono: telefono
