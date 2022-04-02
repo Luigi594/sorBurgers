@@ -25,7 +25,8 @@ exports.ObtenerEmpleados = async (req, res) => {
     const { id } = req.query;
 
     const lista = await modeloEmpleado.findOne({
-        where: {id: id
+        where: {
+            id: id
         }
     })
 
