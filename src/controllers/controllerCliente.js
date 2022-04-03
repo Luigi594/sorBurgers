@@ -29,7 +29,7 @@ exports.ObtenerCliente = async (req, res) => {
         res.status(200).json({msj: "No existe el cliente"})
     }
     else{
-        res.status(200).json({Cliente: lista})
+        res.status(200).json(lista)
     }
 }
 
