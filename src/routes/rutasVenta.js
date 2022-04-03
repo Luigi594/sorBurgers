@@ -7,7 +7,7 @@ const validaciones = require('../middleware/authVenta');
 const controladorVenta = require('../controllers/controllerVenta');
 
 router.get('/', controladorVenta.ListarVentas);
-router.post('/guardar', validaciones.Validacion, controladorVenta.GuardarVentas);
+router.post('/guardar', controladorVenta.GuardarVentas);
 router.delete('/eliminar', controladorVenta.EliminarVenta);
 
 module.exports = router;
