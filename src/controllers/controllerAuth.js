@@ -42,7 +42,7 @@ exports.RecuperarContrasenia = async (req, res) => {
         buscaUsuario.pin = pin;
         await buscaUsuario.save()
         .then((result) => {
-            respuesta("Correo enviado", 200, [], res);
+            respuesta("Correo enviado", 200, buscaUsuario.id, res);
         })
         .catch((err) => {
             respuesta("Problema al enviar el correo", 400, [], res);
