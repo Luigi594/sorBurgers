@@ -7,6 +7,7 @@ const validaciones = require('../middleware/authMiddleware');
 const controladorCliente = require('../controllers/controllerCliente');
 
 router.get('/', controladorCliente.ListaClientes);
+router.get('/editar', controladorCliente.ObtenerCliente);
 router.post('/guardar', validaciones.Validacion, controladorCliente.GuardarCliente);
 router.put('/modificar', validaciones.Validacion, controladorCliente.ModificarCliente);
 
