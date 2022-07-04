@@ -6,7 +6,7 @@ Integrantes:
 * Luis Armando Martínez
 * Luis Armando Meza
 * Óscar Eduardo Mejía
-* Rafael Suazo Girón
+* Rafael Girón Suazo
 * Wilson Lizardo
 
 # Ejecutar la aplicación
